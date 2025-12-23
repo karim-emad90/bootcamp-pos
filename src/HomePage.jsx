@@ -46,13 +46,16 @@ export default function HomePage() {
 <div className="card bg-base-100 w-96 shadow-sm" key={el.documentId}>
   <figure>
     <img
-    className="w-full h-[300px] object-contain"
-      src={`${API_BASE_URL}${el.img.url}`}
-      alt="Shoes" />
+  className="w-full h-64 object-cover"
+  src={`${API_BASE_URL}${el.attributes.img.data.attributes.url}`}
+  alt={el.attributes.name}
+/>
   </figure>
   <div className="card-body">
-    <h2 className="card-title">{el.name}</h2>
-    <p>Price is: ${el.price}</p>
+    <h3 className="text-2xl text-neutral-900">
+  {el.attributes.name}
+</h3>
+    <p>price: {el.attributes.price} EGP</p>
     <div className="card-actions justify-end">
       <button className="btn btn-primary">Buy Now</button>
     </div>
