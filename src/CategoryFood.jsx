@@ -34,7 +34,7 @@ export default function CategoryFood() {
             {
                 items?.map((el) => (
                 <div className="bg-white rounded-2xl flex flex-col items-center p-3 gap-2 shadow border hover:bg-yellow transition duration-500 opacity-70 hover:opacity-100">
-                   <img className='w-full h-8/10' src={'https://my-strapi-app-18rf.onrender.com'+ el.img.url}/>
+                   <img className='w-full h-8/10' src={`${API_BASE_URL}${el.img.url}`} />
                    <h3 className='text-2xl text-neutral-900'>{el.name}</h3>
                    <p>price: {el.price}EGP</p>
                    <button className="btn btn-primary">Add to cart</button>

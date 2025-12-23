@@ -47,7 +47,7 @@ export default function HomePage() {
   <figure>
     <img
     className="w-full h-[300px] object-contain"
-      src={API_BASE_URL+ el.img?.url}
+      src={`${API_BASE_URL}${el.img.url}`}
       alt="Shoes" />
   </figure>
   <div className="card-body">
