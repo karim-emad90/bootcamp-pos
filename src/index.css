@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --color-yellow: #ffca40;
+  --color-red: #c8161d;
+  --color-grey: #808080;
+  --color-creamy: #f8f8f7;
+}
+
