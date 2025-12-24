@@ -8,7 +8,18 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "@tailwindcss/vite": "^4.1.18",
+    "axios": "^1.13.2",
+    "daisyui": "^5.5.14",
+    "express": "^4.18.2",
+    "formik": "^2.4.9",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.11.0",
+    "tailwindcss": "^4.1.18",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.1.2",
