@@ -1,9 +1,10 @@
 services:
-  - type: web
+  - type: static
     name: bootcamp-pos
     env: static
-    staticPublishPath: dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    publish: dist
+    buildCommand: npm install && npm run build
+    redirects:
+      - source: "/*"
+        destination: "/index.html"
+        status: 200
