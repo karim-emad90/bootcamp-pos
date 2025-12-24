@@ -1,13 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { API_BASE_URL } from "./Config";
+import Swal from 'sweetalert2'
 
 export default function CategoryFood() {
   const { id } = useParams(); // ده documentId
   const [items, setItems] = useState([]);
+  const [guest,setGuestStatus] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    let guest = JSON.parse(localStorage.getItem('guest'));
+    setGuestStatus(guest);
+
     axios
       .get(`${API_BASE_URL}/api/categories/${id}?populate=foods.img`)
       .then((res) => {
@@ -18,6 +24,25 @@ export default function CategoryFood() {
         console.error(err);
       });
   }, [id]);
+
+  const addToCart = () => {
+ if(guest){
+  Swal.fire({
+    title: "You need to have an account to add to cart!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonText: "Register Page",
+  confirmButtonColor: "#46cc41",
+  cancelButtonText: "Continue without register",
+  cancelButtonColor:'#f28f33',
+  reverseButtons: true
+  }).then((res) => {
+    if(res.isConfirmed){
+      navigate('/register');
+    }
+  })
+ }
+  }
 
   return (
     <div className="w-full h-full overflow-auto">
@@ -52,7 +77,7 @@ export default function CategoryFood() {
               <h3 className="text-xl mt-2">{food.name}</h3>
               <p className="text-gray-700">{food.price} EGP</p>
 
-              <button className="btn btn-primary mt-2">
+              <button onClick={addToCart} className="btn btn-primary mt-2">
                 Add to cart
               </button>
             </div>

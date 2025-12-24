@@ -8,8 +8,19 @@ export default function MainLayout() {
 
   useEffect(() => {
     let token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    let guestStatus = localStorage.getItem('guest');
+
     if(!token){
+
       navigate('/login');
+      
+    }
+
+    if(!token && guestStatus){
+      navigate('/');
+      localStorage.setItem('guest', true);
+    }else{
+      localStorage.setItem('guest',false);
     }
   },[]);
   return (

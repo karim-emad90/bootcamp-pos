@@ -1,20 +1,38 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import MainLogo from './assets/pos.jpg'
+import { useEffect, useState } from "react";
 
 export default function SideMenu() {
+  
+  const [guest,setGuest] = useState()
+  useEffect(()=> {
+    
+   let guestStatus = JSON.parse(localStorage.getItem('guest'));
+   console.log(guestStatus);
+
+   
+   setGuest(guestStatus);
+  },[]);
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('token');
     sessionStorage.removeItem('token');
     navigate('/login');
+    if(guest){
+      navigate('/register');
+    }
 
   }
   return (
-    
     <div className="w-full h-dvh flex flex-col g-3 p-4   border-r border-r-grey">
-        <div className="w-full flex justify-center">
+      { 
+        
+        guest && (<div className="w-full flex justify-center">
              <img src={MainLogo} />
-        </div>
+        </div>)
+      }
+   
+        
         
 
               <NavLink className={({ isActive }) =>
@@ -34,7 +52,7 @@ export default function SideMenu() {
     "hover:bg-yellow rounded p-3 " + (isActive ? "bg-yellow" : "")
   } to="/menu">Menu</NavLink>
 
-  <button className="btn btn-error w-full" onClick={handleLogout}>Logout</button>
+  <button className={guest?"btn btn-success w-full":'btn btn-error w-full'} onClick={handleLogout}>{guest?'Make Account':'Logout'}</button>
     </div>  
   )
 }

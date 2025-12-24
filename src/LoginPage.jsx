@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
@@ -8,6 +8,7 @@ import { API_BASE_URL } from "./Config";
 
 export default function LoginPage() {
     useEffect(() => {
+      console.log('k');
         let token = localStorage.getItem('token') || sessionStorage.getItem('token');
         if(token){
           navigate('/');
@@ -19,7 +20,7 @@ export default function LoginPage() {
     })
 
     
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleSubmit = (values) => {
         let domain = API_BASE_URL;
@@ -35,6 +36,7 @@ export default function LoginPage() {
             let token = res.data.jwt;
             toast.success('Login Successed!');
             navigate('/');
+            localStorage.setItem('guest',false);
             values.isChecked ? localStorage.setItem('token',token) : sessionStorage.setItem('token',token);
             console.log(res.data.jwt);
 
@@ -43,6 +45,13 @@ export default function LoginPage() {
             console.log(err);
         });
 console.log(values);
+    }
+
+    const navigateGuest = ()=> {
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
+      localStorage.setItem('guest',true);
+      navigate('/');
     }
 
   return (
@@ -67,6 +76,7 @@ console.log(values);
             <button type="submit" className="btn btn-primary w-full">Login</button>
             <Link to={'/register'} className="btn btn-success">
             Don't have account,create new</Link>
+            <Link to={'/'} onClick={navigateGuest} className="text-blue-700 self-end text-decoration-line: underline">Guet Login</Link>
           </Form>
       </Formik>
     </div>
