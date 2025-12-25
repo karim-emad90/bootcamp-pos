@@ -23,12 +23,12 @@ export default function LoginCarousel() {
   }, []);
 
   return (
-    <div className="w-full h-dvh flex flex-col items-center justify-center gap-4 bg-[#f5f6f1]">
+    <div className="w-full h-[80%] lg:h-dvh flex flex-col items-center justify-center gap-4 bg-[#f5f6f1]">
         <img src={logo} className=" self-start" alt="" />
       {/* image */}
       <img
         src={images[index]}
-        className={`w-[50%] h-100 object-container rounded transition-opacity duration-500 ${
+        className={`w-full lg:w-[50%] h-full lg:h-100 object-container rounded transition-opacity duration-500 ${
           fade ? "opacity-100" : "opacity-0"
         }`}
       />

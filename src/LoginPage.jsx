@@ -61,19 +61,19 @@ console.log(values);
 
   return (
 
-    <div className="w-full h-dvh flex gap-5  bg-[#ffffff] text-white">
-      <div className="w-[50%] ">
+    <div className="w-full h-dvh overflow-scroll  flex flex-col  lg:flex-row   lg:gap-5  bg-[#ffffff] text-white">
+      <div className="w-full lg:w-[50%] ">
         <LoginCarousel/>
       </div>
-      <div className="flex justify-center w-[50%] bg-[#ffffff]">
+      <div className="flex h-dvh  justify-center w-full lg:w-[50%] bg-[#ffffff]">
          <Formik initialValues={{
         email:'',
         password:'',
         isChecked: false
       }} onSubmit={handleSubmit} validationSchema={validationSchema}>
-          <Form className=" rounded-3xl p-4 flex flex-col justify-center gap-3 w-[60%]">
-            <h1 className="text-[#070707] text-3xl font-bold">Welcome.Back!</h1>
-            <p className="text-sm text-grey">Please,sign in to continue</p>
+          <Form className=" rounded-3xl p-4 flex flex-col justify-center gap-3 w-full lg:w-[60%]">
+            <h1 className="text-[#070707] text-3xl font-bold self-center lg:self-start">Welcome.Back!</h1>
+            <p className="text-sm text-grey self-center lg:self-start">Please,sign in to continue</p>
             <Field className='w-full input bg-[#f5f6f1] text-grey' name='email' placeholder='Enter Your Email'/>
             <ErrorMessage name='email' component={'p'} className="text-red-500"/>
             <Field className='w-full input bg-[#f5f6f1] text-grey'  name='password' placeholder='Enter Your Password'/>
@@ -86,7 +86,7 @@ console.log(values);
             <button type="submit" className="btn btn-warning w-full text-black font-bold">Sign In</button>
             <Link to={'/register'} className="btn btn-success text-black font-bold">
             Register</Link>
-            <Link to={'/'} onClick={navigateGuest} className="text-blue-700 self-end text-decoration-line: underline">Guet Login</Link>
+            <Link to={'/'} onClick={navigateGuest} className="text-blue-700 text-xl lg:text-lg self-center lg:self-end text-decoration-line: underline">Guest Login</Link>
             <p className="text-grey self-center">or</p>
             <section className="w-full flex justify-between">
               <a href="https://myaccount.google.com/?pli=1" target="_blank" className="w-[45%] h-[50px] flex gap-2 items-center justify-center rounded-xl border-gray-400 border-[0.25px]">
