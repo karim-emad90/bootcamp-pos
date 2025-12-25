@@ -7,4 +7,18 @@
   --color-grey: #808080;
   --color-creamy: #f8f8f7;
 }
+@layer utilities {
+  @keyframes slide {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-slide {
+    animation: slide 12s linear infinite;
+  }
+}
 

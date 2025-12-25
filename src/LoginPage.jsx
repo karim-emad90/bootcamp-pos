@@ -5,6 +5,11 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import { API_BASE_URL } from "./Config";
+import LoginCarousel from "./LoginCarousel";
+import { FcGoogle } from "react-icons/fc";
+import { ImFacebook2 } from "react-icons/im";
+
+
 
 export default function LoginPage() {
     useEffect(() => {
@@ -56,29 +61,53 @@ console.log(values);
 
   return (
 
-    <div className="w-full h-dvh flex items-center justify-center bg-gray-950 text-white">
-      <Formik initialValues={{
+    <div className="w-full h-dvh flex gap-5  bg-[#ffffff] text-white">
+      <div className="w-[50%] ">
+        <LoginCarousel/>
+      </div>
+      <div className="flex justify-center w-[50%] bg-[#ffffff]">
+         <Formik initialValues={{
         email:'',
         password:'',
         isChecked: false
       }} onSubmit={handleSubmit} validationSchema={validationSchema}>
-          <Form className="bg-gray-900 shadow rounded-3xl p-4 flex flex-col gap-3 w-100">
-            <h1>Please Login To The System</h1>
-            <Field className='w-full input' name='email' placeholder='Enter Your Email'/>
+          <Form className=" rounded-3xl p-4 flex flex-col justify-center gap-3 w-[60%]">
+            <h1 className="text-[#070707] text-3xl font-bold">Welcome.Back!</h1>
+            <p className="text-sm text-grey">Please,sign in to continue</p>
+            <Field className='w-full input bg-[#f5f6f1] text-grey' name='email' placeholder='Enter Your Email'/>
             <ErrorMessage name='email' component={'p'} className="text-red-500"/>
-            <Field className='w-full input' name='password' placeholder='Enter Your Password'/>
+            <Field className='w-full input bg-[#f5f6f1] text-grey'  name='password' placeholder='Enter Your Password'/>
             <ErrorMessage name='password' component={'p'} className="text-red-500"/>
             <label>
-              <Field name='isChecked' className='checkbox checkbox-primary' type='checkbox' />
+              <Field name='isChecked' className='checkbox checkbox-primary text-success bg-[#f5f6f1]' type='checkbox' />
               Remember Me
             </label>
             
-            <button type="submit" className="btn btn-primary w-full">Login</button>
-            <Link to={'/register'} className="btn btn-success">
-            Don't have account,create new</Link>
+            <button type="submit" className="btn btn-warning w-full text-black font-bold">Sign In</button>
+            <Link to={'/register'} className="btn btn-success text-black font-bold">
+            Register</Link>
             <Link to={'/'} onClick={navigateGuest} className="text-blue-700 self-end text-decoration-line: underline">Guet Login</Link>
+            <p className="text-grey self-center">or</p>
+            <section className="w-full flex justify-between">
+              <a href="https://myaccount.google.com/?pli=1" target="_blank" className="w-[45%] h-[50px] flex gap-2 items-center justify-center rounded-xl border-gray-400 border-[0.25px]">
+               
+             <FcGoogle className="text-2xl" />
+             <p className="text-black text-sm">Sign up with Google</p>
+              </a>
+              <a href="https://www.facebook.com/" target="_blank" className="w-[45%] h-[50px] flex gap-2 items-center justify-center rounded-xl border-gray-400 border-[0.25px]">
+                  <a>
+             <ImFacebook2 className="text-blue-700 text-2xl" />
+              </a>
+             <p className="text-black text-sm">Sign up with Facebook</p>
+            
+              </a>
+             
+             
+            </section>
           </Form>
       </Formik>
+      </div>
+      
     </div>
   )
 }

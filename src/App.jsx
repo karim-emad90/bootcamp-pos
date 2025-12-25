@@ -6,6 +6,7 @@ import RegisterPage from "./RegisterPage";
 import HomePage from "./HomePage";
 import Menu from "./Menu";
 import CategoryFood from "./CategoryFood";
+import LoginCarousel from "./LoginCarousel";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="login" element={<LoginPage/>}/>
           <Route path="register" element={<RegisterPage/>}/>
           <Route path="*" element={<h1>Error404 | Error Page</h1>}/>
+          <Route path='carousel' element={<LoginCarousel/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

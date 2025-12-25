@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import MainLogo from './assets/pos.jpg'
+import MainLogo from './assets/pos.png'
 import { useEffect, useState } from "react";
 
 export default function SideMenu() {
