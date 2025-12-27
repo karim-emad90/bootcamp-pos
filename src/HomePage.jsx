@@ -8,7 +8,6 @@ export default function HomePage() {
         let url = domain + endPoint;
 
         const [user,setUser] = useState();
-        const[phones,setPhones] = useState();
     useEffect(() => {
       let token = localStorage.getItem('token') || sessionStorage.getItem('token');
       axios.get(url,{
@@ -31,9 +30,7 @@ export default function HomePage() {
       let endPoint = '/api/phones?populate=*';
       let url = domain+endPoint;
       axios.get(url).then((res) =>{
-        console.log(res.data);
-        setPhones(res.data.data);
-        console.log(phones);
+        
       }
       ).catch((err)=> {});
     },[])
@@ -41,28 +38,7 @@ export default function HomePage() {
     <div className="w-full h-full overflow-auto">
       <h1>Welcome {user?.username}</h1>
 
-      <div className="w-full grid grid-cols-3">
-        {phones?.map((el, index) => (
-<div className="card bg-base-100 w-96 shadow-sm" key={el.documentId}>
-  <figure>
-    <img
-  className="w-full h-64 object-cover"
-  src={`${API_BASE_URL}${el.attributes.img.data.attributes.url}`}
-  alt={el.attributes.name}
-/>
-  </figure>
-  <div className="card-body">
-    <h3 className="text-2xl text-neutral-900">
-  {el.attributes.name}
-</h3>
-    <p>price: {el.attributes.price} EGP</p>
-    <div className="card-actions justify-end">
-      <button className="btn btn-primary">Buy Now</button>
-    </div>
-  </div>
-</div>
-        ))}
-      </div>
+      
     </div>
   )
 }

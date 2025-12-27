@@ -95,9 +95,9 @@ console.log(values);
              <p className="text-black text-sm">Sign up with Google</p>
               </a>
               <a href="https://www.facebook.com/" target="_blank" className="w-[45%] h-[50px] flex gap-2 items-center justify-center rounded-xl border-gray-400 border-[0.25px]">
-                  <a>
+      
              <ImFacebook2 className="text-blue-700 text-2xl" />
-              </a>
+              
              <p className="text-black text-sm">Sign up with Facebook</p>
             
               </a>

@@ -3,15 +3,20 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_BASE_URL } from "./Config";
 import Swal from 'sweetalert2'
+import TopNavigation from "./TopNavigation";
+import useSearchStore from "./useSearchStore";
 
 export default function CategoryFood() {
   const { id } = useParams(); // ده documentId
   const [items, setItems] = useState([]);
   const [guest,setGuestStatus] = useState();
   const navigate = useNavigate();
+  const [itemName,setItemName] = useState();
+  const search = useSearchStore((state) => state.search);
 
   useEffect(() => {
     let guest = JSON.parse(localStorage.getItem('guest'));
+    localStorage.setItem('categoryFoods','true');
     setGuestStatus(guest);
 
     axios
@@ -19,11 +24,20 @@ export default function CategoryFood() {
       .then((res) => {
         console.log("CATEGORY RESPONSE 👉", res.data);
         setItems(res.data.data.foods || []);
+        setItemName(res.data.data.name);
+     
       })
       .catch((err) => {
         console.error(err);
       });
   }, [id]);
+
+   const filteredItems = items.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const dataToRender =
+    search && filteredItems.length > 0 ? filteredItems : items;
 
   const addToCart = () => {
  if(guest){
@@ -45,17 +59,24 @@ export default function CategoryFood() {
   }
 
   return (
-    <div className="w-full h-full overflow-auto">
+    <div className="w-full h-full overflow-auto flex flex-col">
       <h1>Category Items</h1>
+      
+            <TopNavigation level="categoryFoods" categoryName={itemName}/>
+           
+      
+      
+      
+     
 
-      {items.length === 0 && (
+      {dataToRender.length === 0 && (
         <p className="text-center mt-10 text-gray-500">
           No items in this category
         </p>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-        {items.map((food) => {
+        {dataToRender.map((food) => {
           const imageUrl =
             food.img?.url
               ? `${API_BASE_URL}${food.img.url}`

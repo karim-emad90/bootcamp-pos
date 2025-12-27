@@ -50,7 +50,7 @@ export default function SideMenu() {
 
   <NavLink className={({ isActive }) =>
     "hover:bg-yellow rounded p-3 " + (isActive ? "bg-yellow" : "")
-  } to="/menu">Menu</NavLink>
+  } to="/menu">Foods & Drinks</NavLink>
 
   <button className={guest?"btn btn-success w-full":'btn btn-error w-full'} onClick={handleLogout}>{guest?'Make Account':'Logout'}</button>
     </div>  
