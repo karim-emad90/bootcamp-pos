@@ -79,7 +79,7 @@ export default function CategoryFood() {
         {dataToRender.map((food) => {
           const imageUrl =
             food.img?.url
-              ? `${API_BASE_URL}${food.img.url}`
+              ? `${food.img.url}`
               : null;
 
           return (

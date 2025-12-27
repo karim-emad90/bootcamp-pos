@@ -44,7 +44,7 @@ export default function Menu() {
           >
             {el.img?.url && (
               <img
-                src={`${API_BASE_URL}${el.img.url}`}
+                src={el.img.url}
                 className="w-full h-48 object-cover rounded-xl"
                 alt={el.name}
               />
