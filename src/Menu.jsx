@@ -8,8 +8,10 @@ import useSearchStore from "./useSearchStore";
 export default function Menu() {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-  const search = useSearchStore((state) => state.search)
+  const search = useSearchStore((state) => state.search);
+ 
 
+ 
   useEffect(() => {
     axios
       .get(`${API_BASE_URL}/api/categories?populate=img`)
@@ -38,13 +40,13 @@ export default function Menu() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
         {dataToRender.map((el) => (
           <div
-            key={el.documentId}
+            key={el.img.url}
             onClick={() => getCategoryItems(el.documentId)}
             className="bg-white rounded-2xl cursor-pointer flex flex-col items-center p-3 shadow border hover:bg-yellow transition"
           >
-            {el.img?.url && (
+            {el.img.url && (
               <img
-                src={el.img.url}
+                src={`${API_BASE_URL}${el.img?.url}`}
                 className="w-full h-48 object-cover rounded-xl"
                 alt={el.name}
               />

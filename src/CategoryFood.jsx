@@ -5,6 +5,7 @@ import { API_BASE_URL } from "./Config";
 import Swal from 'sweetalert2'
 import TopNavigation from "./TopNavigation";
 import useSearchStore from "./useSearchStore";
+import useCartStore from "./useCartStore";
 
 export default function CategoryFood() {
   const { id } = useParams(); // ده documentId
@@ -13,6 +14,8 @@ export default function CategoryFood() {
   const navigate = useNavigate();
   const [itemName,setItemName] = useState();
   const search = useSearchStore((state) => state.search);
+  const addToCart = useCartStore((state) => state.addToCart);
+ 
 
   useEffect(() => {
     let guest = JSON.parse(localStorage.getItem('guest'));
@@ -39,7 +42,7 @@ export default function CategoryFood() {
   const dataToRender =
     search && filteredItems.length > 0 ? filteredItems : items;
 
-  const addToCart = () => {
+  const pushToCart = () => {
  if(guest){
   Swal.fire({
     title: "You need to have an account to add to cart!",
@@ -78,8 +81,8 @@ export default function CategoryFood() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
         {dataToRender.map((food) => {
           const imageUrl =
-            food.img?.url
-              ? `${food.img.url}`
+            food.img.url
+              ? `${API_BASE_URL}${food.img.url}`
               : null;
 
           return (
@@ -98,7 +101,14 @@ export default function CategoryFood() {
               <h3 className="text-xl mt-2">{food.name}</h3>
               <p className="text-gray-700">{food.price} EGP</p>
 
-              <button onClick={addToCart} className="btn btn-primary mt-2">
+              <button onClick={() => {
+                pushToCart; addToCart({
+                  id:food.documentId,
+                  name: food.name,
+                  price: food.price,
+                  img:imageUrl
+                });
+              } } className="btn btn-primary mt-2">
                 Add to cart
               </button>
             </div>

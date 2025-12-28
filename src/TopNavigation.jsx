@@ -4,6 +4,7 @@ import { FiSearch } from "react-icons/fi";
 import { Link, useNavigate, useParams} from "react-router-dom";
 import { useEffect, useState } from "react";
 import useSearchStore from "./useSearchStore";
+import useCartStore from "./useCartStore";
 
 
 
@@ -14,6 +15,8 @@ export default function TopNavigation({level,categoryName}) {
     const navigate = useNavigate();
     const search = useSearchStore((state) => state.search);
     const setSearch = useSearchStore((state) => state.setSearch);
+    const totalItems = useCartStore(state => state.totalItems());
+
     useEffect(()=> {
        
         setCategories(showCategories);
@@ -30,6 +33,10 @@ export default function TopNavigation({level,categoryName}) {
          
       
     
+    }
+
+    const goToCart = () => {
+        navigate('/cart')
     }
 
    
@@ -70,6 +77,14 @@ export default function TopNavigation({level,categoryName}) {
          />
         <FiSearch className="absolute top-4 left-1 text-xl text-red-800" />
         </section>
+        <div className="relative cursor-pointer" onClick={goToCart}>
+  🧺
+  {totalItems > 0 && (
+    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+      {totalItems}
+    </span>
+  )}
+</div>
         
 
       
