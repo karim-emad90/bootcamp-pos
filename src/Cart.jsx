@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useCartStore from "./useCartStore";
+import { API_BASE_URL } from "./Config";
 
 export default function Cart() {
   const cart = useCartStore(state => state.cart);
@@ -17,7 +18,7 @@ export default function Cart() {
 
       {cart.map(item => (
         <CartItem
-          key={item.id}
+          key={item.documentId}
           item={item}
           updateQty={updateQty}
           removeFromCart={removeFromCart}
@@ -48,7 +49,7 @@ function CartItem({ item, updateQty, removeFromCart }) {
     <div className="bg-white rounded-xl shadow p-4 mb-4 flex gap-4">
       {item.img && (
         <img
-          src={item.img}
+          src={`${API_BASE_URL}${item.img}`}
           className="w-24 h-24 object-cover rounded-lg"
         />
       )}

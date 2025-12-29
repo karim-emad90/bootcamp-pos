@@ -17,6 +17,8 @@ export default function CategoryFood() {
   const addToCart = useCartStore((state) => state.addToCart);
   const [openModal,setOpenModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [extraFoods,setExtraFoods] = useState([]);
+  const [extraQty,setExtraQty]= useState({});
  
 
   useEffect(() => {
@@ -30,12 +32,26 @@ export default function CategoryFood() {
         console.log("CATEGORY RESPONSE 👉", res.data);
         setItems(res.data.data.foods || []);
         setItemName(res.data.data.name);
-     
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [id]);
+        res.data.data.foods.map(el => {
+          console.log(el);
+        })}).catch((err) => {
+
+        })
+        
+
+        axios
+      .get(`${API_BASE_URL}/api/extras?populate=*`)
+      .then((res) => {
+        console.log("CATEGORY RESPONSE 👉", res.data);
+        setExtraFoods(res.data.data);
+        console.log(res.data,data);
+        }).catch((err) => {
+
+        })
+        }, [id]);
+        ;
+
+  
 
    const filteredItems = items.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
@@ -61,6 +77,45 @@ export default function CategoryFood() {
     }
   })
  }
+  }
+
+  const showExtraFoods = (food) => {
+    
+   
+  }
+
+  const increaseExtraQty = (id) => {
+   setExtraQty((oldQty) => {
+    const currentQty = oldQty[id] || 0;
+    const newQty = currentQty + 1;
+
+    return {
+      ...oldQty,
+      [id]:newQty
+    }
+   })
+  }
+
+  const decreaseExtraQty = (id) => {
+    setExtraQty((oldQty) => {
+      const currentQty = oldQty[id] ||0;
+      if(currentQty >0){
+        
+      const newQty = currentQty - 1;
+      return {
+        ...oldQty,
+        [id]: newQty
+      }
+
+      }else{
+        return{
+          ...oldQty,
+          [id]:0
+        }
+      }
+
+      
+    })
   }
 
   return (
@@ -98,6 +153,15 @@ export default function CategoryFood() {
                 
                 setOpenModal(true);
                 setSelectedItem(food);
+                showExtraFoods(food);
+                setExtraQty(1);
+
+                const initialQty = {};
+                extraFoods.forEach(el => {
+                  initialQty[el.documentId] = 0;
+                })
+
+                setExtraQty(initialQty);
 
               }
               
@@ -114,16 +178,7 @@ export default function CategoryFood() {
               <h3 className="text-xl mt-2">{food.name}</h3>
               <p className="text-gray-700">{food.price} EGP</p>
 
-              <button onClick={() => {
-                pushToCart; addToCart({
-                  id:food.documentId,
-                  name: food.name,
-                  price: food.price,
-                  img:imageUrl
-                });
-              } } className="btn btn-primary mt-2">
-                Add to cart
-              </button>
+             
             </div>
           );
         })}
@@ -144,7 +199,10 @@ export default function CategoryFood() {
   {selectedItem && (
     <div className="p-6 flex flex-col h-full">
       <button
-        onClick={() => setOpenModal(false)}
+        onClick={() => {setOpenModal(false);
+
+        }
+      }
         className="self-end text-gray-500 text-xl"
       >
         ✕
@@ -167,11 +225,48 @@ export default function CategoryFood() {
         {selectedItem.description || "No description"}
       </p>
 
+      <div className="w-full h-dvh flex justify-items-center items-center flex-col gap-4 bg-amber-200">
+        {
+          extraFoods.map(el => {
+            
+return(
+            <div className="w-full flex g-3 justify-items-between items-center">
+                  <img src={`${API_BASE_URL}${el.img.url}`} className="w-[50px] mr-3"/>
+                  <p className="w-full text-sm font-bold">{el.name}</p>
+
+                  <section className="w-full flex justify-between">
+                    <button className="btn"
+                            onClick={() => {decreaseExtraQty(el.documentId)}}
+                    >-</button>
+                    <p className="h-full self-center">{extraQty[el.documentId] || 0}X</p>
+                    <button onClick={() => {increaseExtraQty(el.documentId)}} className="btn btn-warning">
+                      +
+
+                    </button>
+
+                  </section>
+                  
+            </div>
+           
+)
+            
+          }
+          )
+        }
+
+      </div>
+
       <button
         className="mt-auto btn btn-primary w-full"
         onClick={() => {
-          addToCart(selectedItem);
+           addToCart({
+                  id:selectedItem.documentId,
+                  name: selectedItem.name,
+                  price: selectedItem.price,
+                  img:selectedItem.img.url
+                })
           setOpenModal(false);
+          pushToCart;
         }}
       >
         Confirm Add to Cart

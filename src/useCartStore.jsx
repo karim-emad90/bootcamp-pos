@@ -26,7 +26,7 @@ const useCartStore = create((set, get) => ({
     if (qty < 1) return;
     set({
       cart: get().cart.map(item =>
-        item.id === id ? { ...item, qty } : item
+        item.id === id ? { ...item, qty} : item
       ),
     });
   },
