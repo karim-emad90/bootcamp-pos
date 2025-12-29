@@ -15,6 +15,8 @@ export default function CategoryFood() {
   const [itemName,setItemName] = useState();
   const search = useSearchStore((state) => state.search);
   const addToCart = useCartStore((state) => state.addToCart);
+  const [openModal,setOpenModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
  
 
   useEffect(() => {
@@ -78,7 +80,10 @@ export default function CategoryFood() {
         </p>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4"
+           
+          
+      >
         {dataToRender.map((food) => {
           const imageUrl =
             food.img.url
@@ -89,6 +94,14 @@ export default function CategoryFood() {
             <div
               key={food.documentId}
               className="bg-white rounded-2xl flex flex-col items-center p-3 shadow border"
+              onClick={()=> {
+                
+                setOpenModal(true);
+                setSelectedItem(food);
+
+              }
+              
+              }
             >
               {imageUrl && (
                 <img
@@ -115,6 +128,57 @@ export default function CategoryFood() {
           );
         })}
       </div>
+      {openModal && (
+  <div
+    onClick={() => setOpenModal(false)}
+    className="fixed inset-0 bg-black/40 z-40"
+  />
+)}
+
+{/* Side Modal */}
+<div
+  className={`fixed top-0 right-0 h-full w-[380px] bg-white z-50
+  transform transition-transform duration-300
+  ${openModal ? "translate-x-0" : "translate-x-full"}`}
+>
+  {selectedItem && (
+    <div className="p-6 flex flex-col h-full">
+      <button
+        onClick={() => setOpenModal(false)}
+        className="self-end text-gray-500 text-xl"
+      >
+        ✕
+      </button>
+
+      <img
+        src={`${API_BASE_URL}${selectedItem.img?.url}`}
+        className="w-full h-48 object-cover rounded-xl mt-4"
+      />
+
+      <h2 className="text-2xl font-bold mt-4">
+        {selectedItem.name}
+      </h2>
+
+      <p className="text-lg text-gray-600 mt-2">
+        {selectedItem.price} EGP
+      </p>
+
+      <p className="text-sm text-gray-500 mt-2">
+        {selectedItem.description || "No description"}
+      </p>
+
+      <button
+        className="mt-auto btn btn-primary w-full"
+        onClick={() => {
+          addToCart(selectedItem);
+          setOpenModal(false);
+        }}
+      >
+        Confirm Add to Cart
+      </button>
+    </div>
+  )}
+</div>
     </div>
   );
 }

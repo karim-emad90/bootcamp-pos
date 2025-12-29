@@ -9,6 +9,7 @@ import CategoryFood from "./CategoryFood";
 import LoginCarousel from "./LoginCarousel";
 import TopNavigation from "./TopNavigation";
 import Cart from "./Cart";
+import ExtraOrders from "./ExtraOrders";
 
 export default function App() {
   return (
@@ -28,8 +29,8 @@ export default function App() {
           <Route path="register" element={<RegisterPage/>}/>
           <Route path="*" element={<h1>Error404 | Error Page</h1>}/>
           <Route path='carousel' element={<LoginCarousel/>}></Route>
-          <Route path="topnav" element={<TopNavigation/>}></Route>
           <Route path="cart" element={<Cart/>}></Route>
+          <Route path="extra" element={<ExtraOrders/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
