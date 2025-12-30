@@ -218,12 +218,12 @@ export default function CategoryFood() {
 
 {/* Side Modal */}
 <div
-  className={`fixed top-0 right-0 h-full w-[380px] bg-white z-50
+  className={`fixed top-0 right-0 h-full w-full lg:w-[380px] bg-white z-50
   transform transition-transform duration-300
   ${openModal ? "translate-x-0" : "translate-x-full"}`}
 >
   {selectedItem && (
-    <div className="p-6 flex flex-col h-full">
+    <div className="p-2 lg:p-6 flex flex-col h-full w-full justify-center items-center">
       <button
         onClick={() => {setOpenModal(false);
 

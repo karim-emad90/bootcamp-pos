@@ -25,10 +25,10 @@ export default function MainLayout() {
   },[]);
   return (
     <div className="w-full flex">
-        <div className="w-[256px] h-dvh overflow-hidden bg-white">
+        
          <SideMenu/>
           
-        </div>
+        
         <div className="w-full h-dvh overflow-auto bg-yellow">
             <Outlet/>
         </div>
