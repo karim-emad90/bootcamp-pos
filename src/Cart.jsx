@@ -7,6 +7,7 @@ export default function Cart() {
   const updateQty = useCartStore(state => state.updateQty);
   const removeFromCart = useCartStore(state => state.removeFromCart);
   const totalPrice = useCartStore(state => state.totalPrice());
+  
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -57,10 +58,15 @@ function CartItem({ item, updateQty, removeFromCart }) {
       <div className="flex-1">
         <h3 className="font-bold text-lg">{item.name}</h3>
         <p className="text-gray-600">
-          Price: {item.price} EGP
+          Price: {item.originalPrice} EGP
         </p>
+          {item.extrasPrice > 0 && (
+            <p className="text-gray-500 text-sm">
+             Extras: +{item.extrasPrice} EGP
+           </p>
+  )}
         <p className="text-gray-600">
-          Subtotal: {item.price * item.qty} EGP
+          Subtotal: {item.finalPrice * item.qty} EGP
         </p>
       </div>
 

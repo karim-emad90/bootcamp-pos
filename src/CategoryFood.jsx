@@ -19,7 +19,7 @@ export default function CategoryFood() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [extraFoods,setExtraFoods] = useState([]);
   const [extraQty,setExtraQty]= useState({});
-  const [finalPrice,setFinalPrice] = useState(0);
+  const finalPrice = useCartStore((state) => state.finalPrice);
   const [showFinalPrice, setShowFinalPrice] = useState(false);
   
 
@@ -293,12 +293,15 @@ return(
       <button
         className="mt-auto btn btn-primary w-full"
         onClick={() => {
-           addToCart({
-                  id:selectedItem.documentId,
+         addToCart({
+                  id: selectedItem.documentId,
                   name: selectedItem.name,
-                  price: selectedItem.price,
-                  img:selectedItem.img.url
-                })
+                  img: selectedItem.img.url,
+
+                  originalPrice: selectedItem.price,
+                  extrasPrice: totalExtrasPrice,
+                  finalPrice: finalMealPrice,
+                  });
           setOpenModal(false);
           pushToCart;
         }}
