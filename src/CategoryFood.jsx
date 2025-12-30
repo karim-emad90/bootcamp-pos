@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_BASE_URL } from "./Config";
 import Swal from 'sweetalert2'
@@ -19,7 +19,9 @@ export default function CategoryFood() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [extraFoods,setExtraFoods] = useState([]);
   const [extraQty,setExtraQty]= useState({});
- 
+  const [finalPrice,setFinalPrice] = useState(0);
+  const [showFinalPrice, setShowFinalPrice] = useState(false);
+  
 
   useEffect(() => {
     let guest = JSON.parse(localStorage.getItem('guest'));
@@ -84,7 +86,19 @@ export default function CategoryFood() {
    
   }
 
-  const increaseExtraQty = (id) => {
+     const extraPrice = (el) => {
+    return (extraQty[el.documentId] || 0) * el.price;
+  };
+
+    const totalExtrasPrice = extraFoods.reduce((sum, el) => {
+    return sum + (extraQty[el.documentId] || 0) * el.price;
+  }, 0);
+
+
+    const finalMealPrice =
+    (selectedItem?.price || 0) + totalExtrasPrice;
+
+  const increaseExtraQty = (el,id) => {
    setExtraQty((oldQty) => {
     const currentQty = oldQty[id] || 0;
     const newQty = currentQty + 1;
@@ -94,7 +108,19 @@ export default function CategoryFood() {
       [id]:newQty
     }
    })
+
+   setShowFinalPrice(true);
+   
+
+
   }
+
+ 
+
+
+   
+
+  
 
   const decreaseExtraQty = (id) => {
     setExtraQty((oldQty) => {
@@ -154,13 +180,13 @@ export default function CategoryFood() {
                 setOpenModal(true);
                 setSelectedItem(food);
                 showExtraFoods(food);
-                setExtraQty(1);
 
                 const initialQty = {};
                 extraFoods.forEach(el => {
                   initialQty[el.documentId] = 0;
                 })
 
+                
                 setExtraQty(initialQty);
 
               }
@@ -218,7 +244,7 @@ export default function CategoryFood() {
       </h2>
 
       <p className="text-lg text-gray-600 mt-2">
-        {selectedItem.price} EGP
+        {showFinalPrice? finalMealPrice : selectedItem.price} EGP
       </p>
 
       <p className="text-sm text-gray-500 mt-2">
@@ -238,8 +264,16 @@ return(
                     <button className="btn"
                             onClick={() => {decreaseExtraQty(el.documentId)}}
                     >-</button>
-                    <p className="h-full self-center">{extraQty[el.documentId] || 0}X</p>
-                    <button onClick={() => {increaseExtraQty(el.documentId)}} className="btn btn-warning">
+                    <div className="flex w-[40%]">
+                       <p className="h-full self-center">{extraQty[el.documentId] || 0}X</p>
+                       <p className="h-full self-center">{extraPrice(el)}EGP</p>
+                    </div>
+                    
+
+                    <button onClick={() => {
+                      increaseExtraQty(el, el.documentId)}
+                      
+                      } className="btn btn-warning">
                       +
 
                     </button>

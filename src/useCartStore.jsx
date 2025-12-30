@@ -31,6 +31,8 @@ const useCartStore = create((set, get) => ({
     });
   },
 
+  
+
   removeFromCart: (id) => {
     set({
       cart: get().cart.filter(item => item.id !== id),
